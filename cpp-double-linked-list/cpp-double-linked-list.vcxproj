@@ -110,6 +110,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DoubleLinkedList.h" />
+    <ClInclude Include="OrderedDoubleLinkedList.h" />
+    <ClInclude Include="PhoneBook.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PhoneBookTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
