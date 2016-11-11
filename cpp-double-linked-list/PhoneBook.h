@@ -22,8 +22,6 @@ class PhoneBook
 
 		// Insert phone book entry into phonebook
 		void insert(PhoneBookEntry entry) {
-			list.insert(entry);
-
 			ListNode<PhoneBookEntry>* foundNode = list.find(entry);
 
 			if (foundNode == NULL) {

@@ -271,7 +271,6 @@ class DoubleLinkedList
 				delete firstNode;
 				firstNode = NULL;
 				lastNode = NULL;
-				return;
 			} else { // Pop off the element				
 				std::cout << "Popping off last element: " << lastNode->data() << ".\n";
 				lastNode = lastNode->previous();
