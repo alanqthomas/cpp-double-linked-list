@@ -1,5 +1,6 @@
 #include "DoubleLinkedList.h"
 #include "OrderedDoubleLinkedList.h"
+#include "PhoneBookEntry.h"
 #include <iostream>
 
 
@@ -49,6 +50,12 @@ int main() {
 
 	oList->print();
 	oList->debug(std::cout);
+
+	PhoneBookEntry entry = PhoneBookEntry("Joe", "123");
+	PhoneBookEntry entry2 = PhoneBookEntry("Bob", "456");
+	PhoneBookEntry entry3 = PhoneBookEntry(entry);
+
+	std::cout << "entry < entry2: " << (entry == entry2) << ".\n";
 
 	std::getchar();
 }

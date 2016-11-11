@@ -115,6 +115,7 @@
   <ItemGroup>
     <ClInclude Include="DoubleLinkedList.h" />
     <ClInclude Include="OrderedDoubleLinkedList.h" />
+    <ClInclude Include="PhoneBookEntry.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Driver.cpp" />
