@@ -1,4 +1,5 @@
 #include "DoubleLinkedList.h"
+#include "OrderedDoubleLinkedList.h"
 #include <iostream>
 
 
@@ -20,8 +21,34 @@ int main() {
 	list->push_back(2);
 	list->push_back(3);
 
+	list->pop_front();
+	list->pop_back();
+	list->pop_back();
+
+	list->insert_before(list->first(), 1);
+	list->insert_before(list->first(), 2);
+	list->insert_after(list->last(), 3);
+
+	list->erase(3);
+
 	list->print();
 	list->debug(std::cout);
+
+	std::cout << "\n\n\n";
+
+	OrderedDoubleLinkedList<int>* oList = new OrderedDoubleLinkedList<int>();
+
+	oList->insert(3);
+	oList->insert(1);	
+	oList->insert(5);
+	oList->insert(2);
+	oList->insert(4);
+
+	oList->erase(3);
+	oList->erase(5);
+
+	oList->print();
+	oList->debug(std::cout);
 
 	std::getchar();
 }

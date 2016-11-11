@@ -47,6 +47,11 @@ class ListNode
 		// default constructor
 		ListNode() {}
 
+		// default destructor
+		~ListNode() {
+			std::cout << "ListNode destroyed.\n";
+		}
+
 		// copy constructor
 		ListNode(const DataType &newItem) {
 			dataType = newItem;
@@ -107,7 +112,17 @@ class DoubleLinkedList
 
 		// destructor
 		virtual ~DoubleLinkedList() {
-			std::cout << "Base destructor for DoubleLinkedList called\n";
+			ListNode<DataType>* cursor;
+			ListNode<DataType>* node;
+			cursor = firstNode;
+
+			while (cursor != NULL) {
+				node = cursor;
+				cursor = cursor->next();
+				delete node;
+			}
+
+			std::cout << "Base destructor for DoubleLinkedList called. Deleted all nodes in list\n";
 		}
 
 		// return the number of nodes in the list
@@ -117,7 +132,7 @@ class DoubleLinkedList
 
 		// return true if the list is empty
 		bool empty() const {
-			return numberNodes < 1 ? true : else;
+			return numberNodes < 1 ? true : false;
 		}
 
 		// display the contents of the list to std::cout
@@ -128,7 +143,7 @@ class DoubleLinkedList
 			std::cout << "(head)";
 
 			if (cursor == NULL) {
-				std::cout << "EMPTY";
+				std::cout << "EMPTY(tail)\n";
 			} else {
 				while (cursor != NULL) {
 					std::cout << cursor->data();
@@ -160,14 +175,17 @@ class DoubleLinkedList
 		virtual void push_front(const DataType &newItem) {
 			ListNode<int>* node = new ListNode<int>(newItem);
 			
+			// List is empty
 			if (firstNode == NULL) {
 				firstNode = node;
 				lastNode = node;
-			} else {
+			} else { // Push to front
 				firstNode->previous(node);
 				node->next(firstNode);
 				firstNode = node;
 			}
+
+			numberNodes++;
 			std::cout << "Pushed " << node->data() << " to the front.\n";
 		}
 
@@ -175,70 +193,86 @@ class DoubleLinkedList
 		virtual void push_back(const DataType &newItem) {
 			ListNode<int>* node = new ListNode<int>(newItem);
 
+			// List is empty
 			if (firstNode == NULL) {
 				firstNode = node;
 				lastNode = node;
-			}
-			else {
+			} else { // Push to back
 				node->previous(lastNode);
 				lastNode->next(node);
 				lastNode = node;
 			}
 
+			numberNodes++;
 			std::cout << "Pushed " << node->data() << " to the back.\n";
 		}
 
 		// remove an item from the front of the list
 		virtual void pop_front() {
+			// List is empty
+			if (firstNode == NULL) {
+				std::cout << "The list is empty. No nodes were removed.\n";
+				return;
+			}
+
+			// Only one node in the list
 			if (firstNode == lastNode) {
+				delete firstNode;
 				firstNode = NULL;
 				lastNode = NULL;
 				std::cout << "Removed the last node in the list.\n";
-				return;
+			} else { // Pop off the element				
+				std::cout << "Popping off first element: " << firstNode->data() << ".\n";
+				firstNode = firstNode->next();
+				delete firstNode->previous();
+				firstNode->previous(NULL);
 			}
 
-			if (firstNode == NULL) {
-				std::cout << "The list is empty. No noes were removed.\n";
-				return;
-			}
-
-			std::cout << "Popping off first element: " << firstNode->data() << ".\n";
-			firstNode = firstNode->next();	
-			firstNode->previous(NULL);
+			numberNodes--;
 		}
 
 		// remove an item from the back of the list
 		virtual void pop_back() {
+			// List is empty
+			if (firstNode == NULL) {
+				std::cout << "The list is empty. No nodes were removed.\n";
+				return;
+			}
+
+			// Only one node in the list
 			if (firstNode == lastNode) {
+				delete firstNode;
 				firstNode = NULL;
 				lastNode = NULL;
 				std::cout << "Removed the last node in the list.\n";
 				return;
+			} else { // Pop off the element				
+				std::cout << "Popping off last element: " << lastNode->data() << ".\n";
+				lastNode = lastNode->previous();
+				delete lastNode->next();
+				lastNode->next(NULL);
 			}
 
-			if (firstNode == NULL) {				
-				std::cout << "The list is empty. No noes were removed.\n";
-				return;
-			}
-
-			std::cout << "Popping off last element: " << lastNode->data() << ".\n";
-			lastNode = lastNode->previous();
-			lastNode->next(NULL);
+			numberNodes--;
 		}
 
 		// insert newItem before the existingNode
 		virtual void insert_before(ListNode<DataType>* existingNode, const DataType &newItem) {
 			ListNode<int>* node = new ListNode<int>(newItem);
 
+			// Argument null
 			if (existingNode == NULL) {
 				firstNode = node;
 				lastNode = node;
 				return;
-			} else if (firstNode == existingNode) {
+			}
+			
+			// Argument is first node
+			if (firstNode == existingNode) { 
 				firstNode->previous(node);
 				node->next(firstNode);
 				firstNode = node;
-			} else {
+			} else { // All other cases
 				ListNode<DataType>* prev = existingNode->previous();
 				prev->next(node);
 				existingNode->previous(node);
@@ -246,6 +280,7 @@ class DoubleLinkedList
 				node->next(existingNode);
 			}
 
+			numberNodes++;
 			std::cout << node->data() << " inserted before " << existingNode->data() << ".\n";
 		}
 
@@ -253,15 +288,19 @@ class DoubleLinkedList
 		virtual void insert_after(ListNode<DataType>* existingNode,	const DataType &newItem) {
 			ListNode<int>* node = new ListNode<int>(newItem);
 
+			// Argument null
 			if (existingNode == NULL) {
 				firstNode = node;
 				lastNode = node;
 				return;
-			} else if (lastNode == existingNode) {
+			}
+			
+			// Argument is last node
+			if (lastNode == existingNode) { 
 				node->previous(lastNode);
 				lastNode->next(node);
 				lastNode = node;
-			} else {
+			} else { // All other cases
 				ListNode<DataType>* nxt = existingNode->next();
 				existingNode->next(node);
 				nxt->previous(node);
@@ -269,14 +308,14 @@ class DoubleLinkedList
 				node->next(nxt);
 			}
 
+			numberNodes++;
 			std::cout << node->data() << " inserted after " << existingNode->data() << ".\n";
 		}
 
 		// find the node and return the address to the node. Return nullptr if not found
 		virtual ListNode<DataType>* find(const DataType &existingItem) {
-
+			// Iterate through the list
 			ListNode<DataType>* cursor = firstNode;
-
 			while (cursor != NULL) {
 				if (cursor->data() == existingItem) {
 					std::cout << "Found data.\n";
@@ -285,20 +324,24 @@ class DoubleLinkedList
 				cursor = cursor->next();
 			}
 
+			// Could not find a matching node
 			std::cout << "Could not find data. Returning NULL.\n";
 			return NULL;
 		}
 
 		// remove the node equal to currentItem
 		virtual bool erase(const DataType &currentItem) {
+			// Find the item with the argument's value
 			std::cout << "Attempting to find the node before erasing.\n";
 			ListNode<DataType>* node = DoubleLinkedList::find(currentItem);
 
+			// Node was not in the list
 			if (node == NULL) {
 				std::cout << "Could not find node.\n";
 				return false;
 			}
 
+			// Call erase(ListNode<DataType>) to handle logic
 			std::cout << "Node found. Attempting to erase.\n";
 			return DoubleLinkedList::erase(node);
 		}
@@ -306,43 +349,44 @@ class DoubleLinkedList
 		// remove the node by address existingNode
 		virtual bool erase(ListNode<DataType> *existingNode) {
 
+			// Null argument
 			if (existingNode == NULL) {
 				std::cout << "Parameter node is NULL. Returning.\n";
-				return true;
+				return false;
 			}
 
+			// Only one node in list
 			if (firstNode == lastNode) {
 				firstNode = NULL;
 				lastNode = NULL;
+				delete existingNode;
 				std::cout << "There is only one node in the list - it has been removed.\n";
-				return true;
-			}
-
-			if (existingNode == firstNode) {
+			} else if (existingNode == firstNode) { // Node is first node
 				DoubleLinkedList::pop_front();
 				std::cout << "Node was the first node.\n";
-				return true;
-			}
-
-			if (existingNode == lastNode) {
+			} else if (existingNode == lastNode) { // Node is last node
 				DoubleLinkedList::pop_back();
 				std::cout << "Node was the last node.\n";
-				return true;
+			}
+			else {// Node is somewhere in the middle of the list
+				ListNode<DataType>* prev = existingNode->previous();
+				ListNode<DataType>* nxt = existingNode->next();
+
+				if (prev != NULL && nxt != NULL) {
+					prev->next(nxt);
+					nxt->previous(prev);
+					delete existingNode;
+					std::cout << "Node was removed.\n";
+				}
+				else { // Node is not in a list
+					std::cout << "Node was isolated from a list. Nothing to remove it from.\n";
+					delete existingNode;
+					return false;
+				}
 			}
 
-			ListNode<DataType>* prev = existingNode->previous();
-			ListNode<DataType>* nxt = existingNode->next();
-
-			if (prev != NULL && nxt != NULL) {
-				prev->next(nxt);
-				nxt->previous(prev);
-				std::cout << "Node was removed.\n";
-				return true;
-			}
-			else {
-				std::cout << "Node was isolated from a list. Nothing to remove it from.\n";
-				return false;
-			}
+			numberNodes--;
+			return true;
 		}
 };
 
