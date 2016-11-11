@@ -44,22 +44,37 @@ class ListNode
 		ListNode<DataType>* pPrevious;
 	public:
 		// default constructor
-		ListNode();
+		ListNode() {}
+
 		// copy constructor
-		ListNode(const DataType &newItem);
+		ListNode(const DataType &newItem) {
+			dataType = newItem;
+		}
 		// get the next node
-		ListNode* next() const;
+		ListNode* next() const {
+			return pNext;
+		}
 		// get the previous node
-		ListNode* previous() const;
+		ListNode* previous() const {
+			return pPrevious;
+		}
 		// return the data stored in the node as a const
-		const DataType& data() const;
+		const DataType& data() const {
+			return &dataType;
+		}
 		// return the data stored in the node
-		DataType& data();
+		DataType& data() {
+			return &dataType;
+		}
 	private:
 		// update the next node
-		void next(ListNode *nextNode);
+		void next(ListNode *nextNode){ 
+			pNext = nextNode; 
+		}
 		// update the previous node
-		void previous(ListNode *previousNode);
+		void previous(ListNode *previousNode) {
+			pPrevious = previousNode;
+		}
 };
 
 // DoubleLinkedList class
