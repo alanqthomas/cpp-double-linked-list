@@ -105,9 +105,35 @@ class DoubleLinkedList
 
 		// copy constructor
 		DoubleLinkedList(const DoubleLinkedList &other) {
+			// Return empty if other list is empty
+			if (other.empty()) {
+				return;
+			}
+
+			// Create a cursor for each list
+			ListNode<DataType>* cursorO = other.first();
+			ListNode<DataType>* cursor = new ListNode<DataType>(cursorO->data());
+			
+			// Set the first node 
+			firstNode = cursor;
+			cursorO = cursorO->next();
+
+			// Iterate through the other list and build the new one
+			while (cursorO != NULL) {
+				ListNode<DataType>* nxt = new ListNode<DataType>(cursorO->data());
+				cursor->next(nxt);
+
+				if (nxt != NULL) {
+					nxt->previous(cursor);
+				} else {
+					lastNode = cursor;
+				}
+
+				cursor = cursor->next();
+				cursorO = cursorO->next();
+			}
+
 			numberNodes = other.numberNodes;
-			firstNode = other.firstNode;
-			lastNode = other.lastNode;
 		}
 
 		// destructor
@@ -132,7 +158,7 @@ class DoubleLinkedList
 
 		// return true if the list is empty
 		bool empty() const {
-			return numberNodes < 1 ? true : false;
+			return firstNode == NULL ? true : false;
 		}
 
 		// display the contents of the list to std::cout
@@ -173,7 +199,7 @@ class DoubleLinkedList
 
 		// add an item to the front of the list
 		virtual void push_front(const DataType &newItem) {
-			ListNode<int>* node = new ListNode<int>(newItem);
+			ListNode<DataType>* node = new ListNode<DataType>(newItem);
 			
 			// List is empty
 			if (firstNode == NULL) {
@@ -191,7 +217,7 @@ class DoubleLinkedList
 
 		// add an item to the back of the list
 		virtual void push_back(const DataType &newItem) {
-			ListNode<int>* node = new ListNode<int>(newItem);
+			ListNode<DataType>* node = new ListNode<DataType>(newItem);
 
 			// List is empty
 			if (firstNode == NULL) {
@@ -217,10 +243,10 @@ class DoubleLinkedList
 
 			// Only one node in the list
 			if (firstNode == lastNode) {
+				std::cout << "Removed" << firstNode->data() << " - the only node in the list.\n";
 				delete firstNode;
 				firstNode = NULL;
-				lastNode = NULL;
-				std::cout << "Removed the last node in the list.\n";
+				lastNode = NULL;				
 			} else { // Pop off the element				
 				std::cout << "Popping off first element: " << firstNode->data() << ".\n";
 				firstNode = firstNode->next();
@@ -241,10 +267,10 @@ class DoubleLinkedList
 
 			// Only one node in the list
 			if (firstNode == lastNode) {
+				std::cout << "Removed" << firstNode->data() << " - the only node in the list.\n";
 				delete firstNode;
 				firstNode = NULL;
 				lastNode = NULL;
-				std::cout << "Removed the last node in the list.\n";
 				return;
 			} else { // Pop off the element				
 				std::cout << "Popping off last element: " << lastNode->data() << ".\n";
@@ -258,7 +284,7 @@ class DoubleLinkedList
 
 		// insert newItem before the existingNode
 		virtual void insert_before(ListNode<DataType>* existingNode, const DataType &newItem) {
-			ListNode<int>* node = new ListNode<int>(newItem);
+			ListNode<DataType>* node = new ListNode<DataType>(newItem);
 
 			// Argument null
 			if (existingNode == NULL) {
@@ -286,7 +312,7 @@ class DoubleLinkedList
 
 		// insert newItem after the existingNode
 		virtual void insert_after(ListNode<DataType>* existingNode,	const DataType &newItem) {
-			ListNode<int>* node = new ListNode<int>(newItem);
+			ListNode<DataType>* node = new ListNode<DataType>(newItem);
 
 			// Argument null
 			if (existingNode == NULL) {
@@ -325,7 +351,7 @@ class DoubleLinkedList
 			}
 
 			// Could not find a matching node
-			std::cout << "Could not find data. Returning NULL.\n";
+			std::cout << "Data not already in list.\n";
 			return NULL;
 		}
 

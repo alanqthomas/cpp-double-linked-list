@@ -43,7 +43,7 @@ class OrderedDoubleLinkedList
 			list.print();
 		}
 
-		// display debug information on the passed in ostream
+		// print debug information to the ostream argument
 		void debug(std::ostream &out) const {
 			list.debug(out);
 		}
@@ -77,7 +77,7 @@ class OrderedDoubleLinkedList
 template<class DataType>
 void OrderedDoubleLinkedList<DataType>::insert(const DataType &newItem) {
 	// Check if the item already exists in the list
-	ListNode<int>* foundItem = list.find(newItem);
+	ListNode<DataType>* foundItem = list.find(newItem);
 	if (foundItem != NULL) {
 		std::cout << "Item " << newItem << " already exists. Not inserted.\n";
 		return;
@@ -90,8 +90,8 @@ void OrderedDoubleLinkedList<DataType>::insert(const DataType &newItem) {
 		return;
 	}
 
-	ListNode<int>* cursor = list.first();
-	ListNode<int>* cursorN = cursor;
+	ListNode<DataType>* cursor = list.first();
+	ListNode<DataType>* cursorN = cursor;
 
 	if (newItem < cursor->data()) {
 		list.push_front(newItem);

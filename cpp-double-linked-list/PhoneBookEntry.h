@@ -54,39 +54,36 @@ public:
 	}
 
 	// Overload == operator
-	bool operator==(const PhoneBookEntry& o) {
+	bool operator==(const PhoneBookEntry& o) const{
 		return _name.compare(o.name()) == 0;
 	}
 
 	// Overload != operator
-	bool operator!=(const PhoneBookEntry& o) {
+	bool operator!=(const PhoneBookEntry& o) const {
 		return _name.compare(o.name()) != 0;
 	}
 
 	// Overload < operator
-	bool operator<(const PhoneBookEntry& o) {
+	bool operator<(const PhoneBookEntry& o) const {
 		return _name.compare(o.name()) < 0;
 	}
 
 	// Overload <= operator
-	bool operator<=(const PhoneBookEntry& o) {
+	bool operator<=(const PhoneBookEntry& o) const {
 		return _name.compare(o.name()) <= 0;
 	}
 
 	// Overload > operator
-	bool operator>(const PhoneBookEntry& o) {
+	bool operator>(const PhoneBookEntry& o) const {
 		return _name.compare(o.name()) > 0;
 	}
 
 	// Overload >= operator
-	bool operator>=(const PhoneBookEntry& o) {
+	bool operator>=(const PhoneBookEntry& o) const {
 		return _name.compare(o.name()) >= 0;
-	}
+	}	
 };
 
-std::ostream& operator<<(std::ostream &out, const PhoneBookEntry &entry) {
-	out << entry.name() << "(" << entry.phoneNumber() << ")<" << entry.email() << ">";
-	return out;
-}
+std::ostream& operator<<(std::ostream &out, const PhoneBookEntry &entry);
 
 #endif /* PHONEBOOKENTRY_H_ */

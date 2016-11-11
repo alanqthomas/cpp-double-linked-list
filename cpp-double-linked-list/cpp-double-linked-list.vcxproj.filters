@@ -24,9 +24,15 @@
     <ClInclude Include="PhoneBookEntry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PhoneBook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Driver.cpp">
+    <ClCompile Include="PhoneBookTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhoneBookEntry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
