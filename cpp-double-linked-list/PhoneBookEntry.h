@@ -16,7 +16,7 @@ public:
 	PhoneBookEntry(){ }
 
 	~PhoneBookEntry() {
-		std::cout << "Destructor called.\n";
+		std::cout << "PhoneBookEntry Destructor called.\n";
 	}
 
 	PhoneBookEntry(const std::string &name, const std::string &number) :

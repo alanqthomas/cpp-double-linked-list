@@ -17,29 +17,16 @@ class PhoneBook
 
 		// Destructor
 		~PhoneBook() {
-			std::cout << "Destructor for PhoneBook called.\n";
+			std::cout << "PhoneBook destructor called.\n";
 		}
 
 		// Insert phone book entry into phonebook
-		void insert(PhoneBookEntry entry) {
-			ListNode<PhoneBookEntry>* foundNode = list.find(entry);
-
-			if (foundNode == NULL) {
-				std::cout << "Entry not already in list. Adding.\n";
-				list.insert(entry);
-			}
-			else {
-				std::cout << "Entry already in list. Updating record.\n";
-				list.erase(entry);
-				list.insert(entry);
-			}
-		}
+		void insert(PhoneBookEntry entry);
 
 		// Insert phone book entry into phonebook
 		void insert(const std::string &name, const std::string &number, const std::string &email) {
 			PhoneBookEntry entry = PhoneBookEntry(name, number, email);
-			
-			
+			PhoneBook::insert(entry);			
 		}
 
 		// Insert phone book entry into phonebook
@@ -59,18 +46,7 @@ class PhoneBook
 		}
 
 		// Check if the argument name exists in the phonebook
-		bool find(std::string name) {
-			PhoneBookEntry entry = PhoneBookEntry(name, "temp-record");
-			ListNode<PhoneBookEntry>* foundEntry = list.find(entry);
-
-			if (foundEntry != NULL) {
-				std::cout << "Found entry.\n";
-				return true;
-			} else {
-				std::cout << "Did not find entry.\n";
-				return false;
-			}
-		}
+		bool find(std::string name);
 
 		// Erases the entry that matches the name argument. Returns true/false if found/not found.
 		bool erase(std::string name) {
@@ -93,5 +69,34 @@ class PhoneBook
 			list.debug(ostream);
 		}
 };
+
+// Insert phone book entry into phonebook
+inline void PhoneBook::insert(PhoneBookEntry entry) {
+	ListNode<PhoneBookEntry>* foundNode = list.find(entry);
+
+	if (foundNode == NULL) {
+		std::cout << "Entry not already in list. Adding.\n";
+		list.insert(entry);
+	}
+	else {
+		std::cout << "Entry already in list. Updating record.\n";
+		list.erase(entry);
+		list.insert(entry);
+	}
+}
+
+inline bool PhoneBook::find(std::string name) {
+	PhoneBookEntry entry = PhoneBookEntry(name, "temp-record");
+	ListNode<PhoneBookEntry>* foundEntry = list.find(entry);
+
+	if (foundEntry != NULL) {
+		std::cout << "Found entry.\n";
+		return true;
+	}
+	else {
+		std::cout << "Did not find entry.\n";
+		return false;
+	}
+}
 
 #endif /* PHONEBOOK_H_ */

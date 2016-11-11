@@ -25,7 +25,7 @@ class OrderedDoubleLinkedList
 
 		// destructor
 		virtual ~OrderedDoubleLinkedList() {
-			std::cout << "Base destructor for DoubleLinkedList called.\n";
+			std::cout << "DoubleLinkedList destructor called.\n";
 		}
 
 		// number of items in the list
