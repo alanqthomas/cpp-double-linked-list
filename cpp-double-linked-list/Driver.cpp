@@ -1,35 +1,117 @@
-/*
- * PhoneBookTest.cpp
- *
- * The main function calls two other functions. testPhoneBook and testList
- *
- * The testList function tests the DoubleLinkedList class.
- *
- * The testPhoneBook function tests the PhoneBook class which also uses
- * the PhoneBookEntry class and the OrderedDoubleLinkedList class.
- *
- */
-
 #include <iostream>
 #include <string>
 
-#include "PhoneBook.h"
 #include "DoubleLinkedList.h"
+#include "PhoneBook.h"
+#include "Stack.h"
+#include "Queue.h"
+
+void testStack();
+void printStackInfo(Stack<int>& stack);
+
+void testQueue();
+void printQueueInfo(Queue<int>& queue);
 
 void testPhoneBook();
 void testList();
 
-int main2()
+int main() 
 {
-	std::cout << "Testing the Phone Book" << std::endl;
+	std::cout << "===============Testing the Phone Book===============" << std::endl << std::endl;
 	testPhoneBook();
 
-	std::cout << std::endl;
-	std::cout << "Testing the DoubleLinkedList class" << std::endl;
-
+	std::cout << std::endl << std::endl;
+	std::cout << "===============Testing the DoubleLinkedList class===============" << std::endl << std::endl;
 	testList();
 
+	std::cout << std::endl << std::endl;
+	std::cout << "===============Testing the Stack class===============" << std::endl << std::endl;
+	testStack();
+
+	std::cout << std::endl << std::endl;
+	std::cout << "===============Testing the Queue class===============" << std::endl << std::endl;
+	testQueue();
+
+	std::cout << std::endl << std::endl;
+	std::cout << "Press any key to exit...";
+	std::getchar();
+
 	return 0;
+}
+
+void testStack() {
+	Stack<int> stack;
+
+	stack.push(1);
+	printStackInfo(stack);
+	stack.push(2);
+	printStackInfo(stack);
+	stack.push(3);
+	printStackInfo(stack);
+
+	stack.print();
+
+	stack.pop();
+	printStackInfo(stack);
+	stack.pop();
+	printStackInfo(stack);
+
+	stack.print();
+
+	stack.pop();
+	stack.print();
+
+	stack.push(3);
+	printStackInfo(stack);
+	stack.push(2);
+	printStackInfo(stack);
+	stack.push(1);
+	printStackInfo(stack);
+
+	stack.print();
+}
+
+void testQueue() {
+	Queue<int> queue;
+
+	queue.push(1);
+	printQueueInfo(queue);
+	queue.push(2);
+	printQueueInfo(queue);
+	queue.push(3);
+	printQueueInfo(queue);
+
+	queue.print();
+
+	queue.pop();
+	printQueueInfo(queue);
+	queue.pop();
+	printQueueInfo(queue);
+
+	queue.print();
+
+	queue.pop();
+	queue.print();
+
+	queue.push(3);
+	printQueueInfo(queue);
+	queue.push(2);
+	printQueueInfo(queue);
+	queue.push(1);
+	printQueueInfo(queue);
+
+	queue.print();
+}
+
+void printStackInfo(Stack<int>& stack) {
+	std::cout << "Size: " << stack.size() << ".\n";
+	std::cout << "Top: " << stack.top() << ".\n";
+}
+
+void printQueueInfo(Queue<int>& queue) {
+	std::cout << "Size: " << queue.size() << ".\n";
+	std::cout << "Front: " << queue.front() << ".\n";
+	std::cout << "Back: " << queue.back() << ".\n";
 }
 
 void testPhoneBook()
@@ -40,7 +122,7 @@ void testPhoneBook()
 	phoneBook.insert(PhoneBookEntry("The Phone Place", "800-333-2222", "service@example.com"));
 	phoneBook.insert(PhoneBookEntry("Bob Smith", "800-222-3333"));
 	phoneBook.insert(PhoneBookEntry("Sue Jones", "999-444-5678", "suej@example.net"));
-	phoneBook.insert(PhoneBookEntry("Albert A. Allan", "800-111-3333","aaa.whats.up@example.net"));
+	phoneBook.insert(PhoneBookEntry("Albert A. Allan", "800-111-3333", "aaa.whats.up@example.net"));
 	phoneBook.insert(PhoneBookEntry("Zed Zedson", "800-777-3333", "zztop@example.org"));
 	phoneBook.insert(PhoneBookEntry("Sven Stevens", "800-444-3333"));
 
@@ -61,7 +143,7 @@ void testPhoneBook()
 	std::cout << std::endl;
 
 	std::cout << "Try out some find operators. Notta Person will not be found." << std::endl;
-	for (auto name: {"Albert A. Allan", "Notta Person", "Zed Zedson"})
+	for (auto name : { "Albert A. Allan", "Notta Person", "Zed Zedson" })
 	{
 		if (phoneBook.find(name))
 		{
@@ -75,9 +157,9 @@ void testPhoneBook()
 	std::cout << std::endl;
 
 	std::cout << "Now erase some entries from the list. Notta Person will not be dropped since it isn't in the list" << std::endl;
-	for (auto name: {"Albert A. Allan", "Notta Person", "Sue Jones", "Zed Zedson"})
+	for (auto name : { "Albert A. Allan", "Notta Person", "Sue Jones", "Zed Zedson" })
 	{
-		std::cout << "Erase \""<< name << "\"" << std::endl;
+		std::cout << "Erase \"" << name << "\"" << std::endl;
 		if (phoneBook.erase(name))
 		{
 			std::cout << "Erase was successful" << std::endl;
@@ -94,7 +176,7 @@ void testPhoneBook()
 
 	std::cout << "Display list with " << phoneBook.size() << " items in reverse order" << std::endl;
 	std::cout << "When Sven Stevens is found in the loop, update the phone number and e-mail address" << std::endl;
-	for (auto current=phoneBook.last(); current!=nullptr;current=current->previous())
+	for (auto current = phoneBook.last(); current != nullptr; current = current->previous())
 	{
 		// note the & in auto &item allows us to update the item.
 		// without this we are just updating a copy and it won't be
@@ -121,7 +203,7 @@ void testList()
 	DoubleLinkedList<int> list;
 	std::cout << std::endl;
 	std::cout << "First add items 1, 2, 3, 4 and 5 using push_front()" << std::endl;
-	for (auto value: {1, 2, 3, 4, 5})
+	for (auto value : { 1, 2, 3, 4, 5 })
 	{
 		std::cout << "push_front()" << std::endl;
 		list.push_front(value);
@@ -130,14 +212,14 @@ void testList()
 	list.debug(std::cout);
 	std::cout << std::endl;
 	std::cout << "Remove items 5, 4, and 3 using pop_front()" << std::endl;
-	for (auto value: {5, 4, 3})
+	for (auto value : { 5, 4, 3 })
 	{
 		std::cout << "pop_front() # " << value << std::endl;
 		list.pop_front();
 	}
 
 	std::cout << "First add items 6, 7, 8 and 9 using push_back()" << std::endl;
-	for (auto value: {6, 7, 8, 9})
+	for (auto value : { 6, 7, 8, 9 })
 	{
 		std::cout << "push_back()" << std::endl;
 		list.push_back(value);
@@ -146,7 +228,7 @@ void testList()
 	list.debug(std::cout);
 
 	std::cout << "Try to find entries 2, 4, 6 and 9. Item 4 will not be found." << std::endl;
-	for (auto entry: {2, 4, 6, 9})
+	for (auto entry : { 2, 4, 6, 9 })
 	{
 		auto foundEntry = list.find(entry);
 		if (foundEntry == nullptr)
@@ -162,7 +244,7 @@ void testList()
 	}
 
 	std::cout << "Remove items 9, and 8 using pop_back()" << std::endl;
-	for (auto value: {9, 8})
+	for (auto value : { 9, 8 })
 	{
 		std::cout << "pop_back() # " << value << std::endl;
 		list.pop_back();
@@ -174,13 +256,13 @@ void testList()
 	list.print();
 
 	std::cout << "Add new nodes before existing nodes." << std::endl;
-	for (auto value: {6, 2, 7, 3})
+	for (auto value : { 6, 2, 7, 3 })
 	{
 		auto findNode = list.find(value);
 		if (findNode != nullptr)
 		{
-			std::cout << "add new node (" << value+10 << ") before " << value << std::endl;
-			list.insert_before(findNode, value+10);
+			std::cout << "add new node (" << value + 10 << ") before " << value << std::endl;
+			list.insert_before(findNode, value + 10);
 		}
 		else
 		{
@@ -191,13 +273,13 @@ void testList()
 	list.debug(std::cout);
 
 	std::cout << "Add new nodes after existing nodes." << std::endl;
-	for (auto value: {12, 8, 16, 7})
+	for (auto value : { 12, 8, 16, 7 })
 	{
 		auto findNode = list.find(value);
 		if (findNode != nullptr)
 		{
-			std::cout << "add new node (" << value+20 << ") after " << value << std::endl;
-			list.insert_after(findNode, value+20);
+			std::cout << "add new node (" << value + 20 << ") after " << value << std::endl;
+			list.insert_after(findNode, value + 20);
 		}
 		else
 		{
@@ -208,7 +290,7 @@ void testList()
 	list.debug(std::cout);
 
 	std::cout << "Try to delete nodes 12, 8, 16, and 27." << std::endl;
-	for (auto value: {12, 8, 16, 27})
+	for (auto value : { 12, 8, 16, 27 })
 	{
 		bool deleted = list.erase(value);
 		if (deleted)

@@ -312,7 +312,7 @@ inline void DoubleLinkedList<DataType>::pop_back() {
 
 	// Only one node in the list
 	if (firstNode == lastNode) {
-		std::cout << "Removed" << firstNode->data() << " - the only node in the list.\n";
+		std::cout << "Removed " << firstNode->data() << " - the only node in the list.\n";
 		delete firstNode;
 		firstNode = NULL;
 		lastNode = NULL;
@@ -337,7 +337,7 @@ inline void DoubleLinkedList<DataType>::pop_front() {
 
 	// Only one node in the list
 	if (firstNode == lastNode) {
-		std::cout << "Removed" << firstNode->data() << " - the only node in the list.\n";
+		std::cout << "Removed " << firstNode->data() << " - the only node in the list.\n";
 		delete firstNode;
 		firstNode = NULL;
 		lastNode = NULL;
